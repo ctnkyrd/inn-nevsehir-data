@@ -6,9 +6,10 @@ import psycopg2.extensions
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
-#==========================================================================================
+#===========================================================================================
 #Writer : Arda Çetinkaya
 #Initiation Date : 16-12-2017 13:50
+#===========================================================================================
 
 #DB Parameters==============================================================================
 host = 'localhost'
@@ -39,5 +40,3 @@ try:
         print row[0]
 except BaseException as Be:
     print Be.message
-
-print "all completed!"
