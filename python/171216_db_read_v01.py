@@ -32,11 +32,25 @@ except BaseException as Be:
 
 
 #TheCode====================================================================================
-try:
-    cur = conn.cursor()
-    cur.execute("""SELECT yapi_avlu_ici_yerlesim from yapidata_son""")
-    rows = cur.fetchall()
-    for row in rows:
-        print row[0]
-except BaseException as Be:
-    print Be.message
+# try:
+#     cur = conn.cursor()
+#     cur.execute("""SELECT * from yapidata_son""")
+#     rows = cur.fetchall()
+#     for row in rows:
+#         print row[0]
+# except BaseException as Be:
+#     print Be.message
+
+import pdfkit
+
+body = """
+    <html>
+      <head>
+        <meta name="pdfkit-page-size" content="Legal"/>
+        <meta name="pdfkit-orientation" content="Landscape"/>
+      </head>
+      Hello World!
+      </html>
+    """
+
+pdfkit.from_string(body, 'out.pdf') #with --page-size=Legal and --orientation=Landscape
