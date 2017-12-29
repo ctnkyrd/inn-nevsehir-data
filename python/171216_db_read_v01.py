@@ -3,6 +3,7 @@
 
 import psycopg2
 import psycopg2.extensions
+import pyodbc
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
@@ -18,6 +19,8 @@ password = 'kalman'
 dbName = 'DataCollecitonDB'
 #DB Parameters==============================================================================
 
+#Definitions================================================================================
+
 
 #ConnString=================================================================================
 try:
@@ -31,26 +34,27 @@ except BaseException as Be:
 
 
 
-#TheCode====================================================================================
-# try:
-#     cur = conn.cursor()
-#     cur.execute("""SELECT * from yapidata_son""")
-#     rows = cur.fetchall()
-#     for row in rows:
-#         print row[0]
-# except BaseException as Be:
-#     print Be.message
+#TheCode-PSQL QUERY=========================================================================
+try:
+    cur = conn.cursor()
+    cur.execute("""SELECT * from yapidata""")
+    rows = cur.fetchall()
+    # for row in rows:
+    #     print row[0]
+except BaseException as Be:
+    print Be.message
 
-import pdfkit
+#TheCode-MDB QUERY=========================================================================
+try:
+    mdb = "A:\kaip_ornek_parsel\TASKINPASA_KAIP.mdb"
+    drv = "{Microsoft Access Driver (*.mdb)}"
+    PWD = "pw"
 
-body = """
-    <html>
-      <head>
-        <meta name="pdfkit-page-size" content="Legal"/>
-        <meta name="pdfkit-orientation" content="Landscape"/>
-      </head>
-      Hello World!
-      </html>
-    """
+    mdb_con = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(DRV,MDB,PWD))
+    mdb_cur = mdb_con.cursor()
+    mdb_rows = cur.execute('Select * from BINA').fetchall()
+    mdb_cur.close()
+    mdb_con.close()
 
-pdfkit.from_string(body, 'out.pdf') #with --page-size=Legal and --orientation=Landscape
+except BaseException as Be:
+    print Be.message
