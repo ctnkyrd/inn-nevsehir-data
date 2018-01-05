@@ -3,6 +3,7 @@
 
 import psycopg2
 import psycopg2.extensions
+import pyodbc
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
@@ -17,6 +18,8 @@ user = 'postgres'
 password = 'kalman'
 dbName = 'DataCollecitonDB'
 #DB Parameters==============================================================================
+
+#Definitions================================================================================
 
 
 #ConnString=================================================================================
@@ -145,6 +148,7 @@ def row_processes(row):
             # cur2.execute("select deger from kodyapidata where column_name='")
             
 
+<<<<<<< HEAD
 #TheCode====================================================================================
 try:
     cur = conn.cursor()
@@ -152,5 +156,29 @@ try:
     rows = cur.fetchall()
     for row in rows:
         row_processes(row)
+=======
+#TheCode-PSQL QUERY=========================================================================
+try:
+    cur = conn.cursor()
+    cur.execute("""SELECT * from yapidata""")
+    rows = cur.fetchall()
+    # for row in rows:
+    #     print row[0]
+except BaseException as Be:
+    print Be.message
+
+#TheCode-MDB QUERY=========================================================================
+try:
+    mdb = "A:\kaip_ornek_parsel\TASKINPASA_KAIP.mdb"
+    drv = "{Microsoft Access Driver (*.mdb)}"
+    PWD = "pw"
+
+    mdb_con = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(DRV,MDB,PWD))
+    mdb_cur = mdb_con.cursor()
+    mdb_rows = cur.execute('Select * from BINA').fetchall()
+    mdb_cur.close()
+    mdb_con.close()
+
+>>>>>>> eac69a108ce40666f5a289b62c1f92bc766c1f73
 except BaseException as Be:
     print Be.message
