@@ -143,12 +143,11 @@ def row_processes(row):
             rowLength = row[i].split(',')
             for j in range(rowLength):
                 cur2.execute = ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+str(row[i].split(',')[j])
-                theRow.append()
             pass
             # cur2.execute("select deger from kodyapidata where column_name='")
             
 
-<<<<<<< HEAD
+
 #TheCode====================================================================================
 try:
     cur = conn.cursor()
@@ -156,16 +155,7 @@ try:
     rows = cur.fetchall()
     for row in rows:
         row_processes(row)
-=======
-#TheCode-PSQL QUERY=========================================================================
-try:
-    cur = conn.cursor()
-    cur.execute("""SELECT * from yapidata""")
-    rows = cur.fetchall()
-    # for row in rows:
-    #     print row[0]
-except BaseException as Be:
-    print Be.message
+
 
 #TheCode-MDB QUERY=========================================================================
 try:
@@ -178,7 +168,5 @@ try:
     mdb_rows = cur.execute('Select * from BINA').fetchall()
     mdb_cur.close()
     mdb_con.close()
-
->>>>>>> eac69a108ce40666f5a289b62c1f92bc766c1f73
 except BaseException as Be:
     print Be.message
