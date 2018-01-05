@@ -78,18 +78,79 @@ tableNoDict[43] = 0
 tableNoDict[44] = 0
 tableNoDict[45] = 0
 tableNoDict[46] = 0
+
+global tableNameDict
+tableNameDict = {}
+tableNameDict[1] = "id"
+tableNameDict[2] = "projectid"
+tableNameDict[3] = "groupname"
+tableNameDict[4] = "koyname"
+tableNameDict[5] = "ada"
+tableNameDict[6] = "parsel"
+tableNameDict[7] = "sokak"
+tableNameDict[8] = "kapino"
+tableNameDict[9] = "yapitipi"
+tableNameDict[10] = "yapi_alttipi"
+tableNameDict[11] = "yaklasik_yapim_tarihi"
+tableNameDict[12] = "yapi_ozgun_islev"
+tableNameDict[13] = "yapi_mevcut_islev"
+tableNameDict[14] = "yapi_avlu_ici_yerlesim"
+tableNameDict[15] = "avlu_duvari_yapim_teknigi"
+tableNameDict[16] = "avlu_bahce_duvari_yukseklik"
+tableNameDict[17] = "avlu_bahce_duvari_yapisal_durum"
+tableNameDict[18] = "avlu_bahce_zemini"
+tableNameDict[19] = "avlu_bahce_degismisligi"
+tableNameDict[20] = "avlu_duvari_mudahale_onerisi"
+tableNameDict[21] = "cati_yapisal_durum"
+tableNameDict[22] = "cati_degismisligi"
+tableNameDict[23] = "yapisal_durum"
+tableNameDict[24] = "yapi_degismisligi"
+tableNameDict[25] = "yapi_yerinde_mudahale_onerisi"
+tableNameDict[26] = "cevresel_olcekte_yapi_degeri"
+tableNameDict[27] = "yapi_fotografi"
+tableNameDict[28] = "ozgun_avlu_elemanlari"
+tableNameDict[29] = "ozgun_servis_birimleri"
+tableNameDict[30] = "cati_kaplama_malzemesi"
+tableNameDict[31] = "yapim_teknigi"
+tableNameDict[32] = "ozgun_mimari_elemanlar"
+tableNameDict[33] = "duvar_malzemesi"
+tableNameDict[34] = "tavan_malzemesi"
+tableNameDict[35] = "doseme_malzemesi"
+tableNameDict[36] = "ozgun_mimari_elemanlar_ic"
+tableNameDict[37] = "cati_tipi_formu"
+tableNameDict[38] = "kat_sayisi"
+tableNameDict[39] = "tesisat"
+tableNameDict[40] = "doku_ile_uyum"
+tableNameDict[41] = "mimari_deger"
+tableNameDict[42] = "yeni_yapilara_yonelik_mudahale_onerileri"
+tableNameDict[43] = "status"
+tableNameDict[44] = "timestamp"
+tableNameDict[45] = "createdAt"
+tableNameDict[46] = "updatedAt"
 #Dictionary=================================================================================
 
-
+def row_processes(row):
+    cur2 = conn.cursor()
+    theSentence = []
+    for i in range(46):
+        theRow = []
+        if(tableNoDict[i] == 0):
+            theRow.append(row[i])
+        else:
+            rowLength = row[i].split(',')
+            for j in range(rowLength):
+                cur2.execute = ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+str(row[i].split(',')[j])
+                theRow.append()
+            pass
+            # cur2.execute("select deger from kodyapidata where column_name='")
+            
 
 #TheCode====================================================================================
 try:
     cur = conn.cursor()
     cur.execute("""SELECT * from yapidata_son""")
     rows = cur.fetchall()
-    rowCounter = 0
     for row in rows:
-        print row[0]
-        rowCounter += 1
+        row_processes(row)
 except BaseException as Be:
     print Be.message
