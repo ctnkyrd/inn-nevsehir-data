@@ -142,7 +142,7 @@ def row_processes(row):
         else:
             rowLength = row[i].split(',')
             for j in range(rowLength):
-                cur2.execute = ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+str(row[i].split(',')[j])
+                cur2.execute = ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+str(row[i].split(',')[j]))
             pass
             # cur2.execute("select deger from kodyapidata where column_name='")
             
