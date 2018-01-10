@@ -26,6 +26,7 @@ dbName = 'DataCollecitonDB'
 try:
     conn = psycopg2.connect("dbname="+dbName+" user="+user+" host="+host+" password="+password)
     conn.set_client_encoding('UTF-8')
+
     print "Connected Succesfully!"
 except BaseException as Be:
     print "Unable to connect to the database"
@@ -133,18 +134,23 @@ tableNameDict[46] = "updatedAt"
 #Dictionary=================================================================================
 
 def row_processes(row):
-    cur2 = conn.cursor()
-    theSentence = []
-    for i in range(46):
-        theRow = []
-        if(tableNoDict[i] == 0):
-            theRow.append(row[i])
-        else:
-            rowLength = row[i].split(',')
-            for j in range(rowLength):
-                cur2.execute = ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+str(row[i].split(',')[j]))
-            pass
-            # cur2.execute("select deger from kodyapidata where column_name='")
+    try:
+        cur2 = conn.cursor()
+        theSentence = []
+        for i in range(1,47):
+            theRow = []
+            if(tableNoDict[i] == 0):
+                theRow.append(row[i])
+            else:
+                rowLength = len(str(row[i]).split(','))
+                for j in range(rowLength):
+                    kod = str(str(row[i]).split(',')[j])
+                    if kod.isdigit():
+                        cur2.execute ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+kod)
+                        a = cur2.fetchone()
+                        print a[0]
+    except BaseException as b:
+        print b.message
             
 
 
@@ -158,16 +164,17 @@ try:
 except BaseException as Be:
     print Be.message
 
+print "Done!"
 #TheCode-MDB QUERY=========================================================================
-try:
-    mdb = "A:\kaip_ornek_parsel\TASKINPASA_KAIP.mdb"
-    drv = "{Microsoft Access Driver (*.mdb)}"
-    PWD = "pw"
+# try:
+#     mdb = "A:\kaip_ornek_parsel\TASKINPASA_KAIP.mdb"
+#     drv = "{Microsoft Access Driver (*.mdb)}"
+#     PWD = "pw"
 
-    mdb_con = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(DRV,MDB,PWD))
-    mdb_cur = mdb_con.cursor()
-    mdb_rows = cur.execute('Select * from BINA').fetchall()
-    mdb_cur.close()
-    mdb_con.close()
-except BaseException as Be:
-    print Be.message
+#     mdb_con = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(DRV,MDB,PWD))
+#     mdb_cur = mdb_con.cursor()
+#     mdb_rows = cur.execute('Select * from BINA').fetchall()
+#     mdb_cur.close()
+#     mdb_con.close()
+# except BaseException as Be:
+#     print Be.message
