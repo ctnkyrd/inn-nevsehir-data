@@ -155,7 +155,8 @@ try:
     rows = cur.fetchall()
     for row in rows:
         row_processes(row)
-
+except BaseException as Be:
+    print Be.message
 
 #TheCode-MDB QUERY=========================================================================
 try:
