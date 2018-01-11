@@ -135,6 +135,8 @@ tableNameDict[46] = "updatedAt"
 
 def row_processes(row):
     try:
+        if row[0] == 103:
+            print "dur"
         cur2 = conn.cursor()
         theSentence = []
         for i in range(1,47):
@@ -142,25 +144,33 @@ def row_processes(row):
             if(tableNoDict[i] == 0):
                 print row[x]
             else:
-                rowLength = len(str(row[x]).split(','))
-                multiColumnWrite = ""
-                for j in range(rowLength):
-                    kod = str(str(row[x]).split(',')[j])
-                    if kod.isdigit():
-                        cur2.execute ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+kod)
-                        a = cur2.fetchone()
-                        if(len(multiColumnWrite) == 0):
-                            multiColumnWrite = a[0]
-                        else:
-                            multiColumnWrite = multiColumnWrite + ","+a[0]
-                    else:
-                        b = str(row[x]).split(',')[j]
-                        if (len(b)!=0):
+                if str(row[x].encode('utf-8')).isdigit():
+                    multiColumnWrite = ""
+                    kod = str(row[x])
+                    cur2.execute ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+kod)
+                    a = cur2.fetchone()
+                    multiColumnWrite = a[0]
+                    print multiColumnWrite
+                else:
+                    rowLength = len(row[x].split(','))
+                    multiColumnWrite = ""
+                    for j in range(rowLength):
+                        kod = str(row[x].split(',')[j].encode('utf-8'))
+                        if kod.isdigit():
+                            cur2.execute ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+kod)
+                            a = cur2.fetchone()
                             if(len(multiColumnWrite) == 0):
-                                multiColumnWrite = b
+                                multiColumnWrite = a[0]
                             else:
-                                multiColumnWrite = multiColumnWrite + ","+b
-                print multiColumnWrite                    
+                                multiColumnWrite = multiColumnWrite + ","+a[0]
+                        else:
+                            b = str(row[x]).split(',')[j]
+                            if (len(b)!=0):
+                                if(len(multiColumnWrite) == 0):
+                                    multiColumnWrite = b
+                                else:
+                                    multiColumnWrite = multiColumnWrite + ","+b
+                    print multiColumnWrite                    
     except BaseException as b:
         print b.message
             
