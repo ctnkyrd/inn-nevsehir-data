@@ -138,17 +138,29 @@ def row_processes(row):
         cur2 = conn.cursor()
         theSentence = []
         for i in range(1,47):
-            theRow = []
+            x=i-1
             if(tableNoDict[i] == 0):
-                theRow.append(row[i])
+                print row[x]
             else:
-                rowLength = len(str(row[i]).split(','))
+                rowLength = len(str(row[x]).split(','))
+                multiColumnWrite = ""
                 for j in range(rowLength):
-                    kod = str(str(row[i]).split(',')[j])
+                    kod = str(str(row[x]).split(',')[j])
                     if kod.isdigit():
                         cur2.execute ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+kod)
                         a = cur2.fetchone()
-                        print a[0]
+                        if(len(multiColumnWrite) == 0):
+                            multiColumnWrite = a[0]
+                        else:
+                            multiColumnWrite = multiColumnWrite + ","+a[0]
+                    else:
+                        b = str(row[x]).split(',')[j]
+                        if (len(b)!=0):
+                            if(len(multiColumnWrite) == 0):
+                                multiColumnWrite = b
+                            else:
+                                multiColumnWrite = multiColumnWrite + ","+b
+                print multiColumnWrite                    
     except BaseException as b:
         print b.message
             
