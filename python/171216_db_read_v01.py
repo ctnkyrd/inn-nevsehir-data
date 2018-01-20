@@ -3,6 +3,7 @@
 
 import psycopg2
 import psycopg2.extensions
+import sys,os
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
@@ -143,14 +144,14 @@ def row_processes(row):
             if(tableNoDict[i] == 0):
                 print row[x]
             else:
-                if str(row[x].encode('utf-8')).isdigit():
+                if str(row[x]).encode('utf-8').isdigit():
                     multiColumnWrite = ""
                     kod = str(row[x])
                     cur2.execute ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+kod)
                     a = cur2.fetchone()
                     multiColumnWrite = a[0]
                     print multiColumnWrite
-                else:
+                elif row[x] is not None:
                     rowLength = len(row[x].split(','))
                     multiColumnWrite = ""
                     for j in range(rowLength):
@@ -170,8 +171,13 @@ def row_processes(row):
                                 else:
                                     multiColumnWrite = multiColumnWrite + ","+b
                     print multiColumnWrite                    
-    except BaseException as b:
-        print b.message
+                else:
+                    multiColumnWrite = ""
+                    print multiColumnWrite
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
             
 
 
@@ -182,7 +188,9 @@ try:
     rows = cur.fetchall()
     for row in rows:
         row_processes(row)
-except BaseException as Be:
-    print Be.message
+except Exception as e:
+    exc_type, exc_obj, exc_tb = sys.exc_info()
+    fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    print(exc_type, fname, exc_tb.tb_lineno)
 
 print "Done!"
