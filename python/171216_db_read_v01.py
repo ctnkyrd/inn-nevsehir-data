@@ -3,7 +3,6 @@
 
 import psycopg2
 import psycopg2.extensions
-import pyodbc
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
@@ -187,16 +186,3 @@ except BaseException as Be:
     print Be.message
 
 print "Done!"
-#TheCode-MDB QUERY=========================================================================
-# try:
-#     mdb = "A:\kaip_ornek_parsel\TASKINPASA_KAIP.mdb"
-#     drv = "{Microsoft Access Driver (*.mdb)}"
-#     PWD = "pw"
-
-#     mdb_con = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(DRV,MDB,PWD))
-#     mdb_cur = mdb_con.cursor()
-#     mdb_rows = cur.execute('Select * from BINA').fetchall()
-#     mdb_cur.close()
-#     mdb_con.close()
-# except BaseException as Be:
-#     print Be.message
