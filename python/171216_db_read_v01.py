@@ -132,6 +132,23 @@ tableNameDict[44] = "timestamp"
 tableNameDict[45] = "createdAt"
 tableNameDict[46] = "updatedAt"
 #Dictionary=================================================================================
+def is_number(s):
+    if s == None:
+        return False
+    else:
+        try:
+            float(s)
+            return True
+        except ValueError:
+            pass
+    
+        try:
+            import unicodedata
+            unicodedata.numeric(s)
+            return True
+        except (TypeError, ValueError):
+            pass
+
 
 def updateDecoded(column_name, value,row_id):
     cur3 = conn.cursor()
@@ -146,19 +163,19 @@ def row_processes(row):
         cur2 = conn.cursor()
         theSentence = ""
         rowId = row[0]
+        
         print rowId, "Started!"
         for i in range(1,47):
             x=i-1
             if(tableNoDict[i] == 0):
-                print row[x]
+                continue
             else:
-                if str(row[x]).encode('utf-8').isdigit():
+                if is_number(row[x]):
                     multiColumnWrite = ""
                     kod = str(row[x])
                     cur2.execute ("select deger from kodyapidata where column_name = '"+tableNameDict[i]+"' and kod = "+kod)
                     a = cur2.fetchone()
                     multiColumnWrite = a[0]
-                    print multiColumnWrite
                     updateDecoded(tableNameDict[i], multiColumnWrite, rowId)
                 elif row[x] is not None:
                     rowLength = len(row[x].split(','))
@@ -173,23 +190,21 @@ def row_processes(row):
                             else:
                                 multiColumnWrite = multiColumnWrite + ","+a[0]
                         else:
-                            b = str(row[x]).split(',')[j]
+                            b = str(row[x].encode('utf-8')).split(',')[j]
                             if (len(b)!=0):
                                 if(len(multiColumnWrite) == 0):
                                     multiColumnWrite = b
                                 else:
-                                    multiColumnWrite = multiColumnWrite + ","+b
-                    print multiColumnWrite
+                                    multiColumnWrite = multiColumnWrite + ","+b.decode('utf-8')
                     updateDecoded(tableNameDict[i], multiColumnWrite, rowId)                  
                 else:
                     multiColumnWrite = ""
-                    print multiColumnWrite
                     updateDecoded(tableNameDict[i], multiColumnWrite, rowId)
         print rowId, "Completed!"
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(exc_type, fname, exc_tb.tb_lineno)            
+        print(exc_type, fname, exc_tb.tb_lineno, rowId, tableNameDict[i])            
 
 
 #TheCode====================================================================================
