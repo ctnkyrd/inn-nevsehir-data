@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-
+import sys, os
 import psycopg2
 import psycopg2.extensions
-import sys,os
+
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODEARRAY)
 
@@ -133,12 +133,20 @@ tableNameDict[45] = "createdAt"
 tableNameDict[46] = "updatedAt"
 #Dictionary=================================================================================
 
+def updateDecoded(column_name, value,row_id):
+    cur3 = conn.cursor()
+    cur3.execute("UPDATE yapidata_decode SET "+column_name+" =%s WHERE id = %s", (value,row_id))
+    conn.commit()
+    cur3.close()
+
+
+
 def row_processes(row):
     try:
-        if row[0] == 103:
-            print "dur"
         cur2 = conn.cursor()
-        theSentence = []
+        theSentence = ""
+        rowId = row[0]
+        print rowId, "Started!"
         for i in range(1,47):
             x=i-1
             if(tableNoDict[i] == 0):
@@ -151,6 +159,7 @@ def row_processes(row):
                     a = cur2.fetchone()
                     multiColumnWrite = a[0]
                     print multiColumnWrite
+                    updateDecoded(tableNameDict[i], multiColumnWrite, rowId)
                 elif row[x] is not None:
                     rowLength = len(row[x].split(','))
                     multiColumnWrite = ""
@@ -170,15 +179,17 @@ def row_processes(row):
                                     multiColumnWrite = b
                                 else:
                                     multiColumnWrite = multiColumnWrite + ","+b
-                    print multiColumnWrite                    
+                    print multiColumnWrite
+                    updateDecoded(tableNameDict[i], multiColumnWrite, rowId)                  
                 else:
                     multiColumnWrite = ""
                     print multiColumnWrite
+                    updateDecoded(tableNameDict[i], multiColumnWrite, rowId)
+        print rowId, "Completed!"
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(exc_type, fname, exc_tb.tb_lineno)
-            
+        print(exc_type, fname, exc_tb.tb_lineno)            
 
 
 #TheCode====================================================================================
