@@ -210,7 +210,7 @@ def row_processes(row):
 #TheCode====================================================================================
 try:
     cur = conn.cursor()
-    cur.execute("""SELECT * from yapidata_son""")
+    cur.execute("""SELECT * from yapidata_corrected""")
     rows = cur.fetchall()
     for row in rows:
         row_processes(row)
