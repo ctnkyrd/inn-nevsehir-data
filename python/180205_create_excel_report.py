@@ -37,7 +37,6 @@ format_h2 = workbook.add_format()
 format_h2.set_bg_color('#d9d9d9')
 format_h2.set_font_color('black')
 format_h2.set_bold(True)
-format_h2.set_align('center')
 format_h2.set_font_name('Arial Narrow')
 format_h2.set_border(1)
 format_h2.set_font_size(8.5)
@@ -63,6 +62,6 @@ format_dc.set_font_size(8.5)
 
 worksheet.write('A1', u'[Ayvalı]',format_h1)
 worksheet.write('C1', u'ADA/PARSEL',format_h1)
-
+worksheet.write('A5', u'ÖZGÜN İŞLEV',format_h2)
 
 workbook.close()
