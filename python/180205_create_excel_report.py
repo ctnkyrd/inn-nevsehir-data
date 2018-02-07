@@ -1,6 +1,21 @@
 # -*- coding: utf-8 -*-
 import sys, os, xlsxwriter
 
+yapiCount = 0
+class yapi:
+    #common class for all yapi data
+    yapiCount = 0
+    def __init__(self, ada, parsel, tip):
+        self.ada = ada
+        self.parsel = parsel
+        self.tip = tip
+        yapi.yapiCount += 1
+    def displayYapiCount(self):
+        return yapiCount
+    def displayYapiDetay(self):
+        print "Ada : ", self.ada, ", Parsel : ", self.parsel, ", Tipi : ",self.tip
+
+
 workBookLocation = "E:\\"
 workBookName = "demo.xlsx"
 
@@ -24,6 +39,10 @@ worksheet.set_column('E:E', 0.76)
 worksheet.set_column('F:F', 11.3)
 worksheet.set_column('G:G', 16.6)
 worksheet.set_column('H:H', 8.5)
+worksheet.set_row(1,8)
+worksheet.set_row(3,8)
+worksheet.set_row(6,8)
+worksheet.set_row(25,8)
 #
 #
 #header1 format_h1#############################################################
@@ -73,6 +92,19 @@ format_dc.set_align('center')
 format_dc.set_font_name('Arial Narrow')
 format_dc.set_border(1)
 format_dc.set_font_size(8.5)
+#
+#
+#h1_merge_format
+#
+#
+# merge_h1_format = workbook.add_format()
+# merge_h1_format.format_h1.set_bg_color('#808080')
+# merge_h1_format.set_font_color('white')
+# merge_h1_format.set_bold(True)
+# merge_h1_format.set_align('center')
+# merge_h1_format.set_font_name('Arial Narrow')
+# merge_h1_format.set_border(2)
+# merge_h1_format.set_font_size(10)
 ##############################################################################
 
 
@@ -80,5 +112,5 @@ format_dc.set_font_size(8.5)
 worksheet.write('A1', u'[Ayvalı]',format_h1)
 worksheet.write('C1', u'ADA/PARSEL',format_h1)
 worksheet.write('A5', u'ÖZGÜN İŞLEV',format_h2)
-
+worksheet.merge_range('A3:I3','GELENEKSEL ANA YAPI',format_h1)
 workbook.close()
