@@ -63,13 +63,14 @@ try:
     worksheet.set_column('C:C', 17.8)
     worksheet.set_column('D:D', 11.26)
     worksheet.set_column('E:E', 0.76)
-    worksheet.set_column('F:F', 11.3)
+    worksheet.set_column('F:F', 13)
     worksheet.set_column('G:G', 16.6)
     worksheet.set_column('H:H', 8.5)
     worksheet.set_row(1,8)
     worksheet.set_row(3,8)
-    worksheet.set_row(6,8)
-    worksheet.set_row(25,8)
+    worksheet.set_row(5,8)
+    worksheet.set_row(12,28)
+    
     #
     #
     #header1 format_h1#############################################################
@@ -92,6 +93,7 @@ try:
     format_h2.set_bg_color('#d9d9d9')
     format_h2.set_font_color('black')
     format_h2.set_bold(True)
+    format_h2.set_align('vcenter')
     format_h2.set_font_name('Arial Narrow')
     format_h2.set_border(1)
     format_h2.set_font_size(8.5)
@@ -105,6 +107,7 @@ try:
     format_h3.set_font_color('black')
     format_h3.set_bold(True)
     format_h3.set_align('center')
+    format_h3.set_align('vcenter')
     format_h3.set_font_name('Arial Narrow')
     format_h3.set_border(1)
     format_h3.set_font_size(8.5)
@@ -120,7 +123,14 @@ try:
     format_dc.set_border(1)
     format_dc.set_font_size(8.5)
     #
-    #
+    
+    format_df = workbook.add_format()
+    format_df.set_font_color('black')
+    format_df.set_align('left')
+    format_df.set_font_name('Arial Narrow')
+    format_df.set_border(1)
+    format_df.set_text_wrap()
+    format_df.set_font_size(8.5)
     #h1_merge_format
     
 
@@ -129,9 +139,91 @@ except BaseException as Be:
     print Be.message
 
 
-worksheet.write('A1', u'[Ayvalı]',format_h1)
 worksheet.write('C1', u'ADA/PARSEL',format_h1)
 worksheet.write('A5', u'ÖZGÜN İŞLEV',format_h2)
-worksheet.merge_range('A3:I3','GELENEKSEL ANA YAPI',format_h1)
-worksheet.merge_range('B5:D5',u'KONUT',format_dc)
+worksheet.write('F5', u'MEVCUT İŞLEV',format_h2)
+worksheet.write('H1', u'YAPI KODU',format_h1)
+worksheet.merge_range('A3:I3',u'GELENEKSEL ANA YAPI',format_h1)
+worksheet.merge_range('A7:D7',u'YAPI ÖZELLİKLERİ',format_h3)
+worksheet.merge_range('F7:I7',u'ÇATI ÖZELLİKLERİ',format_h3)
+worksheet.write('A8', u'YAPIM TARİHİ',format_h2)
+worksheet.write('A9', u'AVLU İÇİ YERLEŞİM',format_h2)
+worksheet.write('A10', u'KAT SAYISI',format_h2)
+worksheet.write('A11', u'YAPIM TEKNİĞİ',format_h2)
+worksheet.merge_range('A12:A13',u'YAPISAL DURUM',format_h2)
+worksheet.merge_range('A14:A15',u'DEĞİŞMİŞLİK',format_h2)
+worksheet.merge_range('A16:A17',u'ÖZGÜN MİMARİ ELEMANLAR',format_h2)
+worksheet.write('F8', u'TİPİ',format_h2)
+worksheet.write('F9', u'KAPLAMA',format_h2)
+worksheet.merge_range('F10:F11',u'YAPISAL DURUM',format_h2)
+worksheet.merge_range('F12:F13',u'DEĞİŞMİŞLİK',format_h2)
+worksheet.merge_range('F15:I15',u'DEĞERLENDİRME/MÜDAHALE',format_h3)
+worksheet.write('F16', u'DEĞER GRUBU',format_h2)
+worksheet.write('F17', u'MÜDAHALE ÖNERİSİ',format_h2)
+worksheet.write('F18', u'TESCİL DURUMU',format_h2)
+worksheet.write('F19', u'TESCİL ÖNERİSİ',format_h2)
+worksheet.write('F20', u'KARAR GRUBU',format_h2)
+worksheet.merge_range('A19:D19',u'AVLU ÖZELLİKLERİ/DEĞERLENDİRME',format_h3)
+worksheet.write('A20', u'ÖZGÜN AVLU ELEMANLARI',format_h2)
+worksheet.write('A21', u'ÖZGÜN SERVİS BİRİMLERİ',format_h2)
+worksheet.merge_range('A22:A23',u'DUVAR YAPISAL DURUMU',format_h2)
+worksheet.merge_range('A24:A25',u'DEĞİŞMİŞLİK',format_h2)
+worksheet.write('A26', u'DUVAR DEĞER GRUBU',format_h2)
+worksheet.write('A27', u'DUVAR KARAR GRUBU',format_h2)
+
+
+
+
+
+
+
+
+
+worksheet.write('A1', koy_adi.decode('utf-8'),format_h1)
+worksheet.write('I1',yapi_kodu,format_dc)
+worksheet.write('D1',ada_parsel.decode('utf-8'),format_dc)
+worksheet.merge_range('B5:D5',ozgun_islev.decode('utf-8'),format_df)
+worksheet.merge_range('G5:I5',mevcut_islev.decode('utf-8'),format_df)
+worksheet.merge_range('B8:D8',yapim_tarihi.decode('utf-8'),format_df)
+worksheet.merge_range('B9:D9',avlu_ici_yerlesim.decode('utf-8'),format_df)
+worksheet.merge_range('B10:D10',kat_sayisi.decode('utf-8'),format_df)
+worksheet.merge_range('B11:D11',yapim_teknigi.decode('utf-8'),format_df)
+worksheet.merge_range('B12:D13',yapisal_durum.decode('utf-8'),format_df)
+worksheet.merge_range('B14:D15',degismislik.decode('utf-8'),format_df)
+worksheet.merge_range('B16:D17',ozgun_mimari_elemanlar.decode('utf-8'),format_df)
+worksheet.merge_range('B20:D20',ozgun_avlu_elemanlari.decode('utf-8'),format_df)
+worksheet.merge_range('B21:D21',ozgun_servis_birimleri.decode('utf-8'),format_df)
+worksheet.merge_range('B22:D23',duvar_yapisal_durum.decode('utf-8'),format_df)
+worksheet.merge_range('B24:D25',avlu_degismislik.decode('utf-8'),format_df)
+worksheet.merge_range('B26:D26',duvar_deger_grubu.decode('utf-8'),format_df)
+worksheet.merge_range('B27:D27',duvar_karar_grubu.decode('utf-8'),format_df)
+worksheet.merge_range('G8:I8',cati_tipi.decode('utf-8'),format_df)
+worksheet.merge_range('G9:I9',cati_kaplama.decode('utf-8'),format_df)
+worksheet.merge_range('G10:I11',cati_yapisal_durum.decode('utf-8'),format_df)
+worksheet.merge_range('G12:I13',cati_degismislik.decode('utf-8'),format_df)
+worksheet.merge_range('G16:I16',deger_grubu.decode('utf-8'),format_df)
+worksheet.merge_range('G17:I17',mudahale_onerisi.decode('utf-8'),format_df)
+worksheet.merge_range('G18:I18',tescil_durumu.decode('utf-8'),format_df)
+worksheet.merge_range('G19:I19',tescil_onerisi.decode('utf-8'),format_df)
+worksheet.merge_range('G20:I20',karar_grubu.decode('utf-8'),format_df)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 workbook.close()
