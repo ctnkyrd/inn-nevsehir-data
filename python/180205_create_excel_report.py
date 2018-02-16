@@ -1,30 +1,43 @@
 # -*- coding: utf-8 -*-
 import sys, os, xlsxwriter
 
-yapiCount = 0
-class yapi:
-    #common class for all yapi data
-    yapiCount = 0
-    def __init__(self,objectid,yapiid, ada, parsel, tip):
-        self.objectid = objectid
-        self.yapiid = yapiid
-        self.ada = ada
-        self.parsel = parsel
-        self.tip = tip
+#================================VARIABLES====================================
 
-        yapi.yapiCount += 1
+#=========YAPI TYPE======================
+yapi_tipi                   = "Geleneksel"
+yapi_alttipi                = "Ana Yapı"
+#=========YAPI MAIN======================
+ada_parsel                  = "32/34v21a"
+yapi_kodu                   = "1232"
+koy_adi                     = "Ayvalı"
+#=========REMAINING======================
+ozgun_islev                 = "Konut,Ticaret"
+mevcut_islev                = "Depo,Ahır"
+yapim_tarihi                = "19.yy"
+avlu_ici_yerlesim           = "Avlu/Bahçe İçinde – Bitişik"
+kat_sayisi                  = "Z+Seçim Yapılmadı"
+yapim_teknigi               = "Yığma Kesme Taş,Betonarme,Yığma Tuğla Briket"
+yapisal_durum               = "4 HARABE- Yapının bazı mekânında ya da tamamında çökme var" 
+degismislik                 = "2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
+ozgun_mimari_elemanlar      = "Parmaklık,Saçak,Çörten,Kapı Silmesi,tepe penceresi"
 
-    def displayYapiDetay(self):
-        print "Ada : ", self.ada, ", Parsel : ", self.parsel, ", Tipi : ",self.tip
+ozgun_avlu_elemanlari       = "Tespit Edilemedi"
+ozgun_servis_birimleri      = "Ahır"
+duvar_yapisal_durum         = "HARABE- Yapının bazı mekânında ya da tamamında çökme var"
+avlu_degismislik            = "2 Konum ve boyut tamamen korunmuş, elemanlar, malzeme ve formda ciddi değişiklikler var."
+duvar_deger_grubu           = "1 Nitelikli, olduğu gibi korunacak avlu duvarı."
+duvar_karar_grubu           = "1 Nitelikli, olduğu gibi korunacak avlu duvarı."
 
+cati_tipi                   = "Düz,Teras,birkismi 1 katli avlu duvari mekan yapilmis arkada"
+cati_kaplama                = "Oluklu Sac,Şap"
+cati_yapisal_durum          = "2 ORTA-Basit onarım ve bakıma ihtiyacı var"
+cati_degismislik            = "3 Konum, boyut ya da form değişmiş, çatı sistemi, malzemeleri, kaplaması kısmen ya da tamamen değiştirilmiş, özgün çatı okunamıyor"
 
-
-def write_cell_value(ws,location,value,format):
-    try:
-        ws.write(location,unicode(value),format)
-    except BaseException as Be:
-        print Be.message
-
+deger_grubu                 = "2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
+mudahale_onerisi            = "4 Kütle ve malzeme özellikleri ile dokuya uyumlu, diğer özellikleri doku ile uyumlu hale getirilerek korunacak yapı"
+tescil_durumu               = ""
+tescil_onerisi              = "Tescile Önerilen"
+karar_grubu                 = "2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
 #=============================================================================
 #Variables, directory of the excel file and name of it
 workBookLocation = "E:\\"
@@ -109,16 +122,8 @@ try:
     #
     #
     #h1_merge_format
-    #
-    #
-    # merge_h1_format = workbook.add_format()
-    # merge_h1_format.format_h1.set_bg_color('#808080')
-    # merge_h1_format.set_font_color('white')
-    # merge_h1_format.set_bold(True)
-    # merge_h1_format.set_align('center')
-    # merge_h1_format.set_font_name('Arial Narrow')
-    # merge_h1_format.set_border(2)
-    # merge_h1_format.set_font_size(10)
+    
+
     ##############################################################################
 except BaseException as Be:
     print Be.message
@@ -128,4 +133,5 @@ worksheet.write('A1', u'[Ayvalı]',format_h1)
 worksheet.write('C1', u'ADA/PARSEL',format_h1)
 worksheet.write('A5', u'ÖZGÜN İŞLEV',format_h2)
 worksheet.merge_range('A3:I3','GELENEKSEL ANA YAPI',format_h1)
+worksheet.merge_range('B5:D5',u'KONUT',format_dc)
 workbook.close()
