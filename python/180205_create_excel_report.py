@@ -48,11 +48,15 @@ workBookLocation = "E:\\"
 workBookName = "demo.xlsx"
 workbook = xlsxwriter.Workbook(workBookLocation+workBookName)
 
+excel_path = r"E:\excele"
+arcpy.env.workspace = excel_path
+arcpy.env.overwriteOutput=True
+mxd_path = os.path.join(excel_path,"excele_mxd.mxd")
 def export_map(map_document,layerName,yapi_id):
     try:
         imagePath = "E:\\"+str(yapi_id)+".jpg"
         mxd = arcpy.mapping.MapDocument(map_document)
-        df = arcpy.mapping.ListDataFrames(mxd, "Layers")[0]
+        df = arcpy.mapping.ListDataFrames(mxd, "AYVALI")[0]
         lyr = arcpy.mapping.ListLayers(mxd, layerName, df)[0]
         arcpy.SelectLayerByAttribute_management(lyr,"NEW_SELECTION","Y_YAPI_ID = "+str(yapi_id))
         df.zoomToSelectedFeatures()
@@ -61,7 +65,7 @@ def export_map(map_document,layerName,yapi_id):
         arcpy.mapping.ExportToJPEG(mxd,imagePath,df,df_export_width=1600,df_export_height=1200)
     except BaseException as be:
         print be.message
-        
+
 def create_geleneksel_ws(wbName, ada, parsel):
     try:
         worksheet = wbName.add_worksheet(ada.decode('utf-8')+"-"+parsel.decode('utf-8'))
