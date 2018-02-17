@@ -570,6 +570,7 @@ for row in cursor:
     mevcut_islev = row.getValue("Y_YAPI_MEV")
     avlu_ici_yerlesim = row.getValue("Y_YAPI_AVL")
     kat_sayisi = row.getValue("Y_KAT_SAYI")
+    yapim_tarihi = row.getValue("Y_YAKLASIK")
     yapim_teknigi = row.getValue("Y_YAPIM_TE")
     yapisal_durum = row.getValue("Y_YAPISAL_")
     degismislik = row.getValue("Y_YAPI_DEG")
@@ -579,22 +580,25 @@ for row in cursor:
     duvar_yapisal_durum = row.getValue("Y_AVLU__01")
     avlu_degismislik = row.getValue("Y_AVLU__03")
 
+
     avlu_karar_deger_temp = row.getValue("Y_AVLU__04")
     # avlu duvar deger/karar grubu
     if avlu_karar_deger_temp is not None:
         if(avlu_karar_deger_temp.split(' ')[0] == '1'):
-            duvar_deger_grubu = u"1-Nitelikli"
-            duvar_karar_grubu = u"1-Korunacak"
+            duvar_deger_grubu = u"Nitelikli"
+            duvar_karar_grubu = u"Korunacak"
         elif(avlu_karar_deger_temp.split(' ')[0] == '2'):
-            duvar_deger_grubu = u"2-Niteliksiz"
-            duvar_karar_grubu = u"2-Kaldırılacak"
+            duvar_deger_grubu = u"Niteliksiz"
+            duvar_karar_grubu = u"Kaldırılacak"
         elif(avlu_karar_deger_temp.split(' ')[0] == '3'):
-            duvar_deger_grubu = u"3-Az Nitelikli"
-            duvar_karar_grubu = u"3-Onarılaca"
+            duvar_deger_grubu = u"Az Nitelikli"
+            duvar_karar_grubu = u"Onarılacak"
         else:
-            duvar_deger_grubu = avlu_karar_deger_temp
+            duvar_deger_grubu = "-"
+            duvar_karar_grubu = "-"
     else:
         duvar_deger_grubu = "-"
+        duvar_karar_grubu = "-"
 
     cati_tipi = row.getValue("Y_CATI_TIP")
     cati_kaplama = row.getValue("Y_CATI_KAP")
@@ -607,7 +611,7 @@ for row in cursor:
     tescil_onerisi = row.getValue("TESCIL_ONERISI")
     karar_grubu = row.getValue("KARAR_GRUBU")
 
-    doku_ile_uyum = row.getValue("Y_YENI_YAP")
+    doku_ile_uyum = row.getValue("Y_DOKU_ILE")
 
     if(yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Cemil"):
         export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
