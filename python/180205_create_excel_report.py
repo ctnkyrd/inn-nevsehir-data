@@ -45,9 +45,9 @@ workingDrive = "E:\\"
 reportFolder = workingDrive+"yapi_fisleri"
 mapExortPath =  reportFolder+"\\"+"map_export"
 
-ayvali_fis_folder = reportFolder+"\\AYVALI"
-taskinpasa_fis_folder = reportFolder+"\\TASKINPASA"
-cemil_fis_folder = reportFolder+"\\CEMIL"
+ayvali_fis_folder = reportFolder+"\\AYVALI\\"
+taskinpasa_fis_folder = reportFolder+"\\TASKINPASA\\"
+cemil_fis_folder = reportFolder+"\\CEMIL\\"
 
 workBookLocation_ayvali = ayvali_fis_folder
 workBookLocation_cemil = cemil_fis_folder
