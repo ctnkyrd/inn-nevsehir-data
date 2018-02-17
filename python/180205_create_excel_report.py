@@ -39,6 +39,9 @@ mudahale_onerisi            = u"-"
 tescil_durumu               = u"-"
 tescil_onerisi              = u"-"
 karar_grubu                 = u"-"
+#===========YENI_YAPI====================
+doku_ile_uyum               = u"-"
+
 #=============================================================================
 #Variables, directory of the excel file and name of it
 workingDrive = "E:\\"
@@ -357,7 +360,7 @@ def create_ek_ws(wbName, ada, parsel):
         worksheet.write('A5', u'ÖZGÜN İŞLEV',format_h2)
         worksheet.write('F5', u'MEVCUT İŞLEV',format_h2)
         worksheet.write('H1', u'YAPI KODU',format_h1)
-        worksheet.merge_range('A3:I3',u'GELENEKSEL ANA YAPI',format_h1)
+        worksheet.merge_range('A3:I3',u'GELENEKSEL EK YAPI',format_h1)
         worksheet.merge_range('A7:D7',u'YAPI ÖZELLİKLERİ',format_h3)
         worksheet.merge_range('F7:I7',u'ÇATI ÖZELLİKLERİ',format_h3)
         worksheet.write('A8', u'YAPIM TARİHİ',format_h2)
@@ -409,6 +412,145 @@ def create_ek_ws(wbName, ada, parsel):
     except BaseException as Be:
         print Be.message
 
+def create_yeni_ana_ws(wbName, ada, parsel):
+    try:
+        worksheet = wbName.add_worksheet(ada.decode('utf-8')+"-"+parsel.decode('utf-8'))
+
+        worksheet.set_portrait()
+        worksheet.set_page_view()
+        worksheet.set_paper(9)
+        worksheet.set_margins(left=0.1,right=0.1)
+
+        ##############################################################################
+        #
+        #set column widths
+        #
+        worksheet.set_column('A:A', 17.8)
+        worksheet.set_column('B:B', 2.0)
+        worksheet.set_column('C:C', 17.8)
+        worksheet.set_column('D:D', 11.26)
+        worksheet.set_column('E:E', 0.76)
+        worksheet.set_column('F:F', 13)
+        worksheet.set_column('G:G', 16.6)
+        worksheet.set_column('H:H', 8.5)
+        worksheet.set_row(1,8)
+        worksheet.set_row(3,8)
+        worksheet.set_row(5,8)
+        worksheet.set_row(12,28)
+        #
+        #
+        #header1 format_h1#############################################################
+        #
+        #
+        format_h1 = wbName.add_format()
+        format_h1.set_bg_color('#808080')
+        format_h1.set_font_color('white')
+        format_h1.set_bold(True)
+        format_h1.set_align('center')
+        format_h1.set_font_name('Arial Narrow')
+        format_h1.set_border(2)
+        format_h1.set_font_size(10)
+        #
+        #
+        #header2 format_h2#############################################################
+        #
+        #
+        format_h2 = wbName.add_format()
+        format_h2.set_bg_color('#d9d9d9')
+        format_h2.set_font_color('black')
+        format_h2.set_bold(True)
+        format_h2.set_align('vcenter')
+        format_h2.set_font_name('Arial Narrow')
+        format_h2.set_border(1)
+        format_h2.set_font_size(8.5)
+        #
+        #
+        #header3 format_h3#############################################################
+        #
+        #
+        format_h3 = wbName.add_format()
+        format_h3.set_bg_color('#bfbfbf')
+        format_h3.set_font_color('black')
+        format_h3.set_bold(True)
+        format_h3.set_align('center')
+        format_h3.set_align('vcenter')
+        format_h3.set_font_name('Arial Narrow')
+        format_h3.set_border(1)
+        format_h3.set_font_size(8.5)
+        #
+        #
+        #datacell format_dc#############################################################
+        #
+        #
+        format_dc = wbName.add_format()
+        format_dc.set_font_color('black')
+        format_dc.set_align('center')
+        format_dc.set_font_name('Arial Narrow')
+        format_dc.set_border(1)
+        format_dc.set_font_size(8.5)
+        #
+        
+        format_df = wbName.add_format()
+        format_df.set_font_color('black')
+        format_df.set_align('left')
+        format_df.set_font_name('Arial Narrow')
+        format_df.set_border(1)
+        format_df.set_text_wrap()
+        format_df.set_font_size(8.5)
+        #h1_merge_format
+        
+
+        ##############################################################################
+
+        worksheet.write('C1', u'ADA/PARSEL',format_h1)
+        worksheet.write('A5', u'MEVCUT İŞLEV',format_h2)
+        worksheet.write('H1', u'YAPI KODU',format_h1)
+        worksheet.merge_range('A3:I3',u'YENİ ANA YAPI',format_h1)
+        worksheet.merge_range('A8:D8',u'YAPI ÖZELLİKLERİ',format_h3)
+        worksheet.merge_range('F5:I5',u'ÇATI ÖZELLİKLERİ',format_h3)
+        worksheet.write('A9', u'YAPIM TARİHİ',format_h2)
+        worksheet.write('A10', u'AVLU İÇİ YERLEŞİM',format_h2)
+        worksheet.write('A11', u'KAT SAYISI',format_h2)
+        worksheet.write('A12', u'YAPIM TEKNİĞİ',format_h2)
+        worksheet.merge_range('A13:A14',u'YAPISAL DURUM',format_h2)
+
+
+
+        worksheet.write('F6', u'TİPİ',format_h2)
+        worksheet.write('F7', u'KAPLAMA',format_h2)
+
+        worksheet.merge_range('F9:I9',u'DEĞERLENDİRME/MÜDAHALE',format_h3)
+        worksheet.merge_range('F10:I11',u'DOKU İLE UYUM',format_h2)
+        
+        worksheet.write('F12',u'DEĞER GRUBU',format_h2)
+        worksheet.write('F13',u'MÜDAHALE ÖNERİSİ',format_h2)
+        worksheet.write('F14', u'KARAR GRUBU',format_h2)
+
+
+
+        worksheet.write('A1', koy_adi.decode('utf-8'),format_h1)
+        worksheet.write('I1',yapi_kodu,format_dc)
+        worksheet.write('D1',ada+"-"+parsel,format_dc)
+
+        worksheet.merge_range('B5:D5',mevcut_islev,format_df)
+        worksheet.merge_range('B9:D9',yapim_tarihi,format_df)
+        worksheet.merge_range('B10:D10',avlu_ici_yerlesim,format_df)
+        worksheet.merge_range('B11:D11',kat_sayisi,format_df)
+        worksheet.merge_range('B12:D12',yapim_teknigi,format_df)
+        worksheet.merge_range('B13:D14',yapisal_durum,format_df)
+
+       
+        worksheet.merge_range('G6:I6',cati_tipi,format_df)
+        worksheet.merge_range('G7:I7',cati_kaplama,format_df)
+        
+
+        worksheet.merge_range('G10:I11',doku_ile_uyum,format_df)
+        worksheet.merge_range('G12:I12',deger_grubu,format_df)
+        worksheet.merge_range('G13:I13',mudahale_onerisi,format_df)
+
+        worksheet.merge_range('G14:I14',karar_grubu,format_df)
+    except BaseException as Be:
+        print Be.message
 #=============================================================================
 #Workbook Formatting...
 
@@ -463,6 +605,8 @@ for row in cursor:
     tescil_onerisi = row.getValue("TESCIL_ONERISI")
     karar_grubu = row.getValue("KARAR_GRUBU")
 
+    doku_ile_uyum = row.getValue("Y_YENI_YAP")
+
     if(yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Cemil"):
         export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
         create_geleneksel_ws(workbook_cemil_geleneksel_ana,ada,parsel)
@@ -487,6 +631,16 @@ for row in cursor:
     elif (yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ek Yapı" and koy_adi == u"Taskinpasa"):
         export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
         create_ek_ws(workbook_taskinpasa_geleneksel_ek,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    
+    elif (yapi_tipi == u"Yeni Yapı" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Cemil"):
+        create_yeni_ana_ws(workbook_cemil_yeni_ana,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    elif (yapi_tipi == u"Yeni Yapı" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Ayvali"):
+        create_yeni_ana_ws(workbook_ayvali_yeni_ana,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    elif (yapi_tipi == u"Yeni Yapı" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Taskinpasa"):
+        create_yeni_ana_ws(workbook_taskinpasa_yeni_ana,ada,parsel)
         print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
     else:
         continue
