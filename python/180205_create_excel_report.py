@@ -127,7 +127,7 @@ def create_geleneksel_ws(wbName, ada, parsel):
         worksheet.set_column('D:D', 11.26)
         worksheet.set_column('E:E', 0.76)
         worksheet.set_column('F:F', 13)
-        worksheet.set_column('G:G', 16.6)
+        worksheet.set_column('G:G', 15)
         worksheet.set_column('H:H', 8.5)
         worksheet.set_row(1,8)
         worksheet.set_row(3,8)
@@ -236,7 +236,7 @@ def create_geleneksel_ws(wbName, ada, parsel):
 
         worksheet.write('A1', koy_adi.decode('utf-8'),format_h1)
         worksheet.write('I1',yapi_kodu,format_dc)
-        worksheet.write('D1',ada+"-"+parsel,format_dc)
+        worksheet.write('D1',ada+"/"+parsel,format_dc)
         worksheet.merge_range('B5:D5',ozgun_islev,format_df)
         worksheet.merge_range('G5:I5',mevcut_islev,format_df)
         worksheet.merge_range('B8:D8',yapim_tarihi,format_df)
@@ -289,7 +289,7 @@ def create_ek_ws(wbName, ada, parsel):
         worksheet.set_column('D:D', 11.26)
         worksheet.set_column('E:E', 0.76)
         worksheet.set_column('F:F', 13)
-        worksheet.set_column('G:G', 16.6)
+        worksheet.set_column('G:G', 15)
         worksheet.set_column('H:H', 8.5)
         worksheet.set_row(1,8)
         worksheet.set_row(3,8)
@@ -390,7 +390,7 @@ def create_ek_ws(wbName, ada, parsel):
 
         worksheet.write('A1', koy_adi.decode('utf-8'),format_h1)
         worksheet.write('I1',yapi_kodu,format_dc)
-        worksheet.write('D1',ada+"-"+parsel,format_dc)
+        worksheet.write('D1',ada+"/"+parsel,format_dc)
         worksheet.merge_range('B5:D5',ozgun_islev,format_df)
         worksheet.merge_range('G5:I5',mevcut_islev,format_df)
         worksheet.merge_range('B8:D8',yapim_tarihi,format_df)
@@ -437,7 +437,7 @@ def create_yeni_ana_ws(wbName, ada, parsel):
         worksheet.set_column('D:D', 11.26)
         worksheet.set_column('E:E', 0.76)
         worksheet.set_column('F:F', 13)
-        worksheet.set_column('G:G', 16.6)
+        worksheet.set_column('G:G', 15)
         worksheet.set_column('H:H', 8.5)
         worksheet.set_row(1,8)
         worksheet.set_row(3,8)
@@ -533,7 +533,7 @@ def create_yeni_ana_ws(wbName, ada, parsel):
 
         worksheet.write('A1', koy_adi.decode('utf-8'),format_h1)
         worksheet.write('I1',yapi_kodu,format_dc)
-        worksheet.write('D1',ada+"-"+parsel,format_dc)
+        worksheet.write('D1',ada+"/"+parsel,format_dc)
 
         worksheet.merge_range('B5:D5',mevcut_islev,format_df)
         worksheet.merge_range('B8:D8',yapim_tarihi,format_df)
@@ -657,6 +657,7 @@ for row in cursor:
     else:
         print "Hatalı Yapi Tipi ya da koyadi ya da hatali geometry"
 
+print "Saving to Excelfiles..."
 workbook_ayvali_geleneksel_ana.close()
 workbook_cemil_geleneksel_ana.close()
 workbook_taskinpasa_geleneksel_ana.close()
@@ -669,3 +670,4 @@ workbook_taskinpasa_yeni_ana.close()
 workbook_ayvali_yeni_ek.close()
 workbook_cemil_yeni_ek.close()
 workbook_taskinpasa_yeni_ek.close()
+print "Completed..."
