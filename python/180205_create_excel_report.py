@@ -1,68 +1,85 @@
 # -*- coding: utf-8 -*-
 import sys, os, xlsxwriter,arcpy
 
+
 #================================DEMO-VARIABLES====================================
-# allYapiData = arcpy.SearchCursor("YAPI_DATA_GIS","Y_YAPI_ID>0")
-
-
-
 #=========YAPI TYPE======================
-yapi_tipi                   = "Geleneksel"
-yapi_alttipi                = "Ana Yapı"
+yapi_tipi                   = u"Geleneksel"
+yapi_alttipi                = u"Ana Yapı"
 #=========YAPI MAIN======================
-ada                         = "32"
-parsel                      = "34v21a"
-yapi_kodu                   = "1232"
-koy_adi                     = "Ayvalı"
+ada                         = u"32"
+parsel                      = u"34v21a"
+yapi_kodu                   = u"1232"
+koy_adi                     = u"Ayvalı"
 #=========REMAINING======================
-ozgun_islev                 = "Konut,Ticaret"
-mevcut_islev                = "Depo,Ahır"
-yapim_tarihi                = "19.yy"
-avlu_ici_yerlesim           = "Avlu/Bahçe İçinde – Bitişik"
-kat_sayisi                  = "Z+Seçim Yapılmadı"
-yapim_teknigi               = "Yığma Kesme Taş,Betonarme,Yığma Tuğla Briket"
-yapisal_durum               = "4 HARABE- Yapının bazı mekânında ya da tamamında çökme var" 
-degismislik                 = "2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
-ozgun_mimari_elemanlar      = "Parmaklık,Saçak,Çörten,Kapı Silmesi,tepe penceresi"
+ozgun_islev                 = u"Konut,Ticaret"
+mevcut_islev                = u"Depo,Ahır"
+yapim_tarihi                = u"19.yy"
+avlu_ici_yerlesim           = u"Avlu/Bahçe İçinde – Bitişik"
+kat_sayisi                  = u"Z+Seçim Yapılmadı"
+yapim_teknigi               = u"Yığma Kesme Taş,Betonarme,Yığma Tuğla Briket"
+yapisal_durum               = u"4 HARABE- Yapının bazı mekânında ya da tamamında çökme var" 
+degismislik                 = u"2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
+ozgun_mimari_elemanlar      = u"Parmaklık,Saçak,Çörten,Kapı Silmesi,tepe penceresi"
 
-ozgun_avlu_elemanlari       = "Tespit Edilemedi"
-ozgun_servis_birimleri      = "Ahır"
-duvar_yapisal_durum         = "HARABE- Yapının bazı mekânında ya da tamamında çökme var"
-avlu_degismislik            = "2 Konum ve boyut tamamen korunmuş, elemanlar, malzeme ve formda ciddi değişiklikler var."
-duvar_deger_grubu           = "1 Nitelikli, olduğu gibi korunacak avlu duvarı."
-duvar_karar_grubu           = "1 Nitelikli, olduğu gibi korunacak avlu duvarı."
+ozgun_avlu_elemanlari       = u"Tespit Edilemedi"
+ozgun_servis_birimleri      = u"Ahır"
+duvar_yapisal_durum         = u"HARABE- Yapının bazı mekânında ya da tamamında çökme var"
+avlu_degismislik            = u"2 Konum ve boyut tamamen korunmuş, elemanlar, malzeme ve formda ciddi değişiklikler var."
+duvar_deger_grubu           = u"1 Nitelikli, olduğu gibi korunacak avlu duvarı."
+duvar_karar_grubu           = u"1 Nitelikli, olduğu gibi korunacak avlu duvarı."
 
-cati_tipi                   = "Düz,Teras,birkismi 1 katli avlu duvari mekan yapilmis arkada"
-cati_kaplama                = "Oluklu Sac,Şap"
-cati_yapisal_durum          = "2 ORTA-Basit onarım ve bakıma ihtiyacı var"
-cati_degismislik            = "3 Konum, boyut ya da form değişmiş, çatı sistemi, malzemeleri, kaplaması kısmen ya da tamamen değiştirilmiş, özgün çatı okunamıyor"
+cati_tipi                   = u"Düz,Teras,birkismi 1 katli avlu duvari mekan yapilmis arkada"
+cati_kaplama                = u"Oluklu Sac,Şap"
+cati_yapisal_durum          = u"2 ORTA-Basit onarım ve bakıma ihtiyacı var"
+cati_degismislik            = u"3 Konum, boyut ya da form değişmiş, çatı sistemi, malzemeleri, kaplaması kısmen ya da tamamen değiştirilmiş, özgün çatı okunamıyor"
 
-deger_grubu                 = "2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
-mudahale_onerisi            = "4 Kütle ve malzeme özellikleri ile dokuya uyumlu, diğer özellikleri doku ile uyumlu hale getirilerek korunacak yapı"
-tescil_durumu               = ""
-tescil_onerisi              = "Tescile Önerilen"
-karar_grubu                 = "2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
+deger_grubu                 = u"2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
+mudahale_onerisi            = u"4 Kütle ve malzeme özellikleri ile dokuya uyumlu, diğer özellikleri doku ile uyumlu hale getirilerek korunacak yapı"
+tescil_durumu               = u""
+tescil_onerisi              = u"Tescile Önerilen"
+karar_grubu                 = u"2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
 #=============================================================================
 #Variables, directory of the excel file and name of it
-workBookLocation = "E:\\"
+workingDrive = "E:\\"
+reportFolder = workingDrive+"yapi_fisleri"
+mapExortPath =  reportFolder+"\\"+"map_export"
+
+ayvali_fis_folder = reportFolder+"\\AYVALI"
+taskinpasa_fis_folder = reportFolder+"\\TASKINPASA"
+cemil_fis_folder = reportFolder+"\\CEMIL"
+
+workBookLocation = workingDrive
 workBookName = "demo.xlsx"
 workbook = xlsxwriter.Workbook(workBookLocation+workBookName)
 
-excel_path = r"E:\excele"
+excel_path = workingDrive+"excele"
 arcpy.env.workspace = excel_path
 arcpy.env.overwriteOutput=True
 mxd_path = os.path.join(excel_path,"excele_mxd.mxd")
+yapi_data_gis = r"E:\excele\16.02.2018\yapidata-gis 09022018\nevsehir_gis.gdb\YAPI_DATA_GIS"
+
+if not os.path.exists(mapExortPath):
+    os.makedirs(mapExortPath)
+if not os.path.exists(ayvali_fis_folder):
+    os.makedirs(ayvali_fis_folder)
+if not os.path.exists(taskinpasa_fis_folder):
+    os.makedirs(taskinpasa_fis_folder)
+if not os.path.exists(cemil_fis_folder):
+    os.makedirs(cemil_fis_folder)
+
+#yapi_objectid_den uretilen yeni kod kullanilacak
 def export_map(map_document,layerName,yapi_id):
     try:
-        imagePath = "E:\\"+str(yapi_id)+".jpg"
+        imagePath = mapExortPath+"\\"+str(yapi_id)+".jpg"
         mxd = arcpy.mapping.MapDocument(map_document)
         df = arcpy.mapping.ListDataFrames(mxd, "AYVALI")[0]
         lyr = arcpy.mapping.ListLayers(mxd, layerName, df)[0]
-        arcpy.SelectLayerByAttribute_management(lyr,"NEW_SELECTION","Y_YAPI_ID = "+str(yapi_id))
+        arcpy.SelectLayerByAttribute_management(lyr,"NEW_SELECTION","YAPI_KODU = "+str(yapi_id))
         df.zoomToSelectedFeatures()
         df.scale *= 1.5
         arcpy.RefreshActiveView()
-        arcpy.mapping.ExportToJPEG(mxd,imagePath,df,df_export_width=1600,df_export_height=1200)
+        arcpy.mapping.ExportToJPEG(mxd,imagePath,df,df_export_width=360,df_export_height=300)
     except BaseException as be:
         print be.message
 
@@ -194,32 +211,34 @@ def create_geleneksel_ws(wbName, ada, parsel):
 
         worksheet.write('A1', koy_adi.decode('utf-8'),format_h1)
         worksheet.write('I1',yapi_kodu,format_dc)
-        worksheet.write('D1',ada.decode('utf-8')+"-"+parsel.decode('utf-8'),format_dc)
-        worksheet.merge_range('B5:D5',ozgun_islev.decode('utf-8'),format_df)
-        worksheet.merge_range('G5:I5',mevcut_islev.decode('utf-8'),format_df)
-        worksheet.merge_range('B8:D8',yapim_tarihi.decode('utf-8'),format_df)
-        worksheet.merge_range('B9:D9',avlu_ici_yerlesim.decode('utf-8'),format_df)
-        worksheet.merge_range('B10:D10',kat_sayisi.decode('utf-8'),format_df)
-        worksheet.merge_range('B11:D11',yapim_teknigi.decode('utf-8'),format_df)
-        worksheet.merge_range('B12:D13',yapisal_durum.decode('utf-8'),format_df)
-        worksheet.merge_range('B14:D15',degismislik.decode('utf-8'),format_df)
-        worksheet.merge_range('B16:D17',ozgun_mimari_elemanlar.decode('utf-8'),format_df)
-        worksheet.merge_range('B20:D20',ozgun_avlu_elemanlari.decode('utf-8'),format_df)
-        worksheet.merge_range('B21:D21',ozgun_servis_birimleri.decode('utf-8'),format_df)
-        worksheet.merge_range('B22:D23',duvar_yapisal_durum.decode('utf-8'),format_df)
-        worksheet.merge_range('B24:D25',avlu_degismislik.decode('utf-8'),format_df)
-        worksheet.merge_range('B26:D26',duvar_deger_grubu.decode('utf-8'),format_df)
-        worksheet.merge_range('B27:D27',duvar_karar_grubu.decode('utf-8'),format_df)
-        worksheet.merge_range('G8:I8',cati_tipi.decode('utf-8'),format_df)
-        worksheet.merge_range('G9:I9',cati_kaplama.decode('utf-8'),format_df)
-        worksheet.merge_range('G10:I11',cati_yapisal_durum.decode('utf-8'),format_df)
-        worksheet.merge_range('G12:I13',cati_degismislik.decode('utf-8'),format_df)
+        worksheet.write('D1',ada+"-"+parsel,format_dc)
+        worksheet.merge_range('B5:D5',ozgun_islev,format_df)
+        worksheet.merge_range('G5:I5',mevcut_islev,format_df)
+        worksheet.merge_range('B8:D8',yapim_tarihi,format_df)
+        worksheet.merge_range('B9:D9',avlu_ici_yerlesim,format_df)
+        worksheet.merge_range('B10:D10',kat_sayisi,format_df)
+        worksheet.merge_range('B11:D11',yapim_teknigi,format_df)
+        worksheet.merge_range('B12:D13',yapisal_durum,format_df)
+        worksheet.merge_range('B14:D15',degismislik,format_df)
+        worksheet.merge_range('B16:D17',ozgun_mimari_elemanlar,format_df)
+        worksheet.merge_range('B20:D20',ozgun_avlu_elemanlari,format_df)
+        worksheet.merge_range('B21:D21',ozgun_servis_birimleri,format_df)
+        worksheet.merge_range('B22:D23',duvar_yapisal_durum,format_df)
+        worksheet.merge_range('B24:D25',avlu_degismislik,format_df)
+        worksheet.merge_range('B26:D26',duvar_deger_grubu,format_df)
+        worksheet.merge_range('B27:D27',duvar_karar_grubu,format_df)
+        worksheet.merge_range('G8:I8',cati_tipi,format_df)
+        worksheet.merge_range('G9:I9',cati_kaplama,format_df)
+        worksheet.merge_range('G10:I11',cati_yapisal_durum,format_df)
+        worksheet.merge_range('G12:I13',cati_degismislik,format_df)
 
-        worksheet.merge_range('G16:I17',deger_grubu.decode('utf-8'),format_df)
-        worksheet.merge_range('G18:I19',mudahale_onerisi.decode('utf-8'),format_df)
-        worksheet.merge_range('G20:I20',tescil_durumu.decode('utf-8'),format_df)
-        worksheet.merge_range('G21:I21',tescil_onerisi.decode('utf-8'),format_df)
-        worksheet.merge_range('G22:I22',karar_grubu.decode('utf-8'),format_df)
+        worksheet.merge_range('G16:I17',deger_grubu,format_df)
+        worksheet.merge_range('G18:I19',mudahale_onerisi,format_df)
+        worksheet.merge_range('G20:I20',tescil_durumu,format_df)
+        worksheet.merge_range('G21:I21',tescil_onerisi,format_df)
+        worksheet.merge_range('G22:I22',karar_grubu,format_df)
+
+        worksheet.insert_image('A29', mapExortPath+"\\"+str(yapi_kodu)+".jpg")
     except BaseException as Be:
         print Be.message
 
@@ -228,8 +247,26 @@ def create_geleneksel_ws(wbName, ada, parsel):
 #Workbook Formatting...
 
 
+cursor = arcpy.SearchCursor(yapi_data_gis,"Y_YAPI_ID not in (0,-4,-9)")
 
-create_geleneksel_ws(workbook,ada,parsel)
+for row in cursor:
+    yapi_kodu = int(row.getValue("YAPI_KODU"))
+    ada = row.getValue("M_ADA")
+    parsel = row.getValue("M_PARSEL")
+    koy_adi = row.getValue("M_KOYNAME")
+    ozgun_islev = row.getValue("Y_YAPI_OZG")
+    mevcut_islev = row.getValue("Y_YAPI_MEV")
+    avlu_ici_yerlesim = row.getValue("Y_YAPI_AVL")
+    kat_sayisi = row.getValue("Y_KAT_SAYI")
+    yapim_teknigi = row.getValue("Y_YAPIM_TE")
+    yapisal_durum = row.getValue("Y_YAPISAL_")
+    degismislik = row.getValue("Y_YAPI_DEG")
+
+    export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
+    create_geleneksel_ws(workbook,ada,parsel)
+    
+
+
 
 
 workbook.close()
