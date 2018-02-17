@@ -47,6 +47,7 @@ doku_ile_uyum               = u"-"
 workingDrive = "E:\\"
 reportFolder = workingDrive+"yapi_fisleri"
 mapExortPath =  reportFolder+"\\"+"map_export"
+image_path = "excele\\all_photo"
 
 ayvali_fis_folder = reportFolder+"\\AYVALI\\"
 taskinpasa_fis_folder = reportFolder+"\\TASKINPASA\\"
@@ -263,6 +264,9 @@ def create_geleneksel_ws(wbName, ada, parsel):
         worksheet.merge_range('G20:I20',karar_grubu,format_df)
 
         worksheet.insert_image('A29', mapExortPath+"\\"+str(yapi_kodu)+".jpg")
+
+        photo_path = workingDrive+"\\excele\\1.jpg"
+        worksheet.insert_image('F22', photo_path)
     except BaseException as Be:
         print Be.message
 
@@ -409,6 +413,8 @@ def create_ek_ws(wbName, ada, parsel):
         worksheet.merge_range('B24:D24',karar_grubu,format_df)
 
         worksheet.insert_image('A26', mapExortPath+"\\"+str(yapi_kodu)+".jpg")
+        photo_path = workingDrive+"\\excele\\1.jpg"
+        worksheet.insert_image('F15', photo_path)
     except BaseException as Be:
         print Be.message
 
