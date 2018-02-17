@@ -59,7 +59,7 @@ workBookLocation_taskinpasa = taskinpasa_fis_folder
 workBookName_geleneksel_ana = "01_Geleneksel_Ana_Yapi.xlsx"
 workBookName_geleneksel_ek = "02_Geleneksel_Ek_Yapi.xlsx"
 workBookName_yeni_ana = "03_Yeni_Ana_Yapi.xlsx"
-workBookName_yeni_ek = "03_Yeni_Ana_Yapi.xlsx"
+workBookName_yeni_ek = "03_Yeni_EK_Yapi.xlsx"
 
 workbook_ayvali_geleneksel_ana = xlsxwriter.Workbook(workBookLocation_ayvali+workBookName_geleneksel_ana)
 workbook_cemil_geleneksel_ana = xlsxwriter.Workbook(workBookLocation_cemil+workBookName_geleneksel_ana)
@@ -435,8 +435,6 @@ def create_yeni_ana_ws(wbName, ada, parsel):
         worksheet.set_column('H:H', 8.5)
         worksheet.set_row(1,8)
         worksheet.set_row(3,8)
-        worksheet.set_row(5,8)
-        worksheet.set_row(12,28)
         #
         #
         #header1 format_h1#############################################################
@@ -506,13 +504,13 @@ def create_yeni_ana_ws(wbName, ada, parsel):
         worksheet.write('A5', u'MEVCUT İŞLEV',format_h2)
         worksheet.write('H1', u'YAPI KODU',format_h1)
         worksheet.merge_range('A3:I3',u'YENİ ANA YAPI',format_h1)
-        worksheet.merge_range('A8:D8',u'YAPI ÖZELLİKLERİ',format_h3)
+        worksheet.merge_range('A7:D7',u'YAPI ÖZELLİKLERİ',format_h3)
         worksheet.merge_range('F5:I5',u'ÇATI ÖZELLİKLERİ',format_h3)
-        worksheet.write('A9', u'YAPIM TARİHİ',format_h2)
-        worksheet.write('A10', u'AVLU İÇİ YERLEŞİM',format_h2)
-        worksheet.write('A11', u'KAT SAYISI',format_h2)
-        worksheet.write('A12', u'YAPIM TEKNİĞİ',format_h2)
-        worksheet.merge_range('A13:A14',u'YAPISAL DURUM',format_h2)
+        worksheet.write('A8', u'YAPIM TARİHİ',format_h2)
+        worksheet.write('A9', u'AVLU İÇİ YERLEŞİM',format_h2)
+        worksheet.write('A10', u'KAT SAYISI',format_h2)
+        worksheet.write('A11', u'YAPIM TEKNİĞİ',format_h2)
+        worksheet.merge_range('A12:A13',u'YAPISAL DURUM',format_h2)
 
 
 
@@ -520,11 +518,10 @@ def create_yeni_ana_ws(wbName, ada, parsel):
         worksheet.write('F7', u'KAPLAMA',format_h2)
 
         worksheet.merge_range('F9:I9',u'DEĞERLENDİRME/MÜDAHALE',format_h3)
-        worksheet.merge_range('F10:I11',u'DOKU İLE UYUM',format_h2)
+        worksheet.merge_range('F10:F11',u'DOKU İLE UYUM',format_h2)
         
         worksheet.write('F12',u'DEĞER GRUBU',format_h2)
-        worksheet.write('F13',u'MÜDAHALE ÖNERİSİ',format_h2)
-        worksheet.write('F14', u'KARAR GRUBU',format_h2)
+        worksheet.write('F13', u'KARAR GRUBU',format_h2)
 
 
 
@@ -533,11 +530,11 @@ def create_yeni_ana_ws(wbName, ada, parsel):
         worksheet.write('D1',ada+"-"+parsel,format_dc)
 
         worksheet.merge_range('B5:D5',mevcut_islev,format_df)
-        worksheet.merge_range('B9:D9',yapim_tarihi,format_df)
-        worksheet.merge_range('B10:D10',avlu_ici_yerlesim,format_df)
-        worksheet.merge_range('B11:D11',kat_sayisi,format_df)
-        worksheet.merge_range('B12:D12',yapim_teknigi,format_df)
-        worksheet.merge_range('B13:D14',yapisal_durum,format_df)
+        worksheet.merge_range('B8:D8',yapim_tarihi,format_df)
+        worksheet.merge_range('B9:D9',avlu_ici_yerlesim,format_df)
+        worksheet.merge_range('B10:D10',kat_sayisi,format_df)
+        worksheet.merge_range('B11:D11',yapim_teknigi,format_df)
+        worksheet.merge_range('B12:D13',yapisal_durum,format_df)
 
        
         worksheet.merge_range('G6:I6',cati_tipi,format_df)
@@ -546,9 +543,8 @@ def create_yeni_ana_ws(wbName, ada, parsel):
 
         worksheet.merge_range('G10:I11',doku_ile_uyum,format_df)
         worksheet.merge_range('G12:I12',deger_grubu,format_df)
-        worksheet.merge_range('G13:I13',mudahale_onerisi,format_df)
 
-        worksheet.merge_range('G14:I14',karar_grubu,format_df)
+        worksheet.merge_range('G13:I13',karar_grubu,format_df)
     except BaseException as Be:
         print Be.message
 #=============================================================================
@@ -642,8 +638,18 @@ for row in cursor:
     elif (yapi_tipi == u"Yeni Yapı" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Taskinpasa"):
         create_yeni_ana_ws(workbook_taskinpasa_yeni_ana,ada,parsel)
         print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    
+    elif (yapi_tipi == u"Yeni Yapı" and yapi_alttipi == u"Ek Yapı" and koy_adi == u"Cemil"):
+        create_yeni_ana_ws(workbook_cemil_yeni_ek,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    elif (yapi_tipi == u"Yeni Yapı" and yapi_alttipi == u"Ek Yapı" and koy_adi == u"Ayvali"):
+        create_yeni_ana_ws(workbook_ayvali_yeni_ek,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    elif (yapi_tipi == u"Yeni Yapı" and yapi_alttipi == u"Ek Yapı" and koy_adi == u"Taskinpasa"):
+        create_yeni_ana_ws(workbook_taskinpasa_yeni_ek,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
     else:
-        continue
+        print "Hatalı Yapi Tipi ya da koyadi ya da hatali geometry"
 
 workbook_ayvali_geleneksel_ana.close()
 workbook_cemil_geleneksel_ana.close()
