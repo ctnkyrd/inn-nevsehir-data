@@ -100,7 +100,7 @@ def export_map(map_document,layerName,yapi_id):
         df.zoomToSelectedFeatures()
         df.scale *= 1.5
         arcpy.RefreshActiveView()
-        arcpy.mapping.ExportToJPEG(mxd,imagePath,df,df_export_width=365,df_export_height=300)
+        arcpy.mapping.ExportToJPEG(mxd,imagePath,df,df_export_width=363,df_export_height=300)
     except BaseException as be:
         print be.message
 
