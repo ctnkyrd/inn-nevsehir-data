@@ -322,7 +322,7 @@ for row in cursor:
         export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
         create_geleneksel_ws(workbook_cemil_geleneksel_ana,ada,parsel)
         print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
-    elif (yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Ayvalı"):
+    elif (yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Ayvali"):
         export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
         create_geleneksel_ws(workbook_ayvali_geleneksel_ana,ada,parsel)
         print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
