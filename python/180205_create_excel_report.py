@@ -4,41 +4,41 @@ import sys, os, xlsxwriter,arcpy
 
 #================================DEMO-VARIABLES====================================
 #=========YAPI TYPE======================
-yapi_tipi                   = u"Geleneksel"
-yapi_alttipi                = u"Ana Yapı"
+yapi_tipi                   = u"-"
+yapi_alttipi                = u"-"
 #=========YAPI MAIN======================
-ada                         = u"32"
-parsel                      = u"34v21a"
-yapi_kodu                   = u"1232"
-koy_adi                     = u"Ayvalı"
+ada                         = u"-"
+parsel                      = u"-"
+yapi_kodu                   = u"-"
+koy_adi                     = u"-"
 #=========REMAINING======================
-ozgun_islev                 = u"Konut,Ticaret"
-mevcut_islev                = u"Depo,Ahır"
-yapim_tarihi                = u"19.yy"
-avlu_ici_yerlesim           = u"Avlu/Bahçe İçinde – Bitişik"
-kat_sayisi                  = u"Z+Seçim Yapılmadı"
-yapim_teknigi               = u"Yığma Kesme Taş,Betonarme,Yığma Tuğla Briket"
-yapisal_durum               = u"4 HARABE- Yapının bazı mekânında ya da tamamında çökme var" 
-degismislik                 = u"2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
-ozgun_mimari_elemanlar      = u"Parmaklık,Saçak,Çörten,Kapı Silmesi,tepe penceresi"
+ozgun_islev                 = u"-"
+mevcut_islev                = u"-"
+yapim_tarihi                = u"-"
+avlu_ici_yerlesim           = u"-"
+kat_sayisi                  = u"-"
+yapim_teknigi               = u"-"
+yapisal_durum               = u"-" 
+degismislik                 = u"-"
+ozgun_mimari_elemanlar      = u"-"
 
-ozgun_avlu_elemanlari       = u"Tespit Edilemedi"
-ozgun_servis_birimleri      = u"Ahır"
-duvar_yapisal_durum         = u"HARABE- Yapının bazı mekânında ya da tamamında çökme var"
-avlu_degismislik            = u"2 Konum ve boyut tamamen korunmuş, elemanlar, malzeme ve formda ciddi değişiklikler var."
-duvar_deger_grubu           = u"1 Nitelikli, olduğu gibi korunacak avlu duvarı."
-duvar_karar_grubu           = u"1 Nitelikli, olduğu gibi korunacak avlu duvarı."
+ozgun_avlu_elemanlari       = u"-"
+ozgun_servis_birimleri      = u"-"
+duvar_yapisal_durum         = u"-"
+avlu_degismislik            = u"-"
+duvar_deger_grubu           = u"-"
+duvar_karar_grubu           = u"-"
 
-cati_tipi                   = u"Düz,Teras,birkismi 1 katli avlu duvari mekan yapilmis arkada"
-cati_kaplama                = u"Oluklu Sac,Şap"
-cati_yapisal_durum          = u"2 ORTA-Basit onarım ve bakıma ihtiyacı var"
-cati_degismislik            = u"3 Konum, boyut ya da form değişmiş, çatı sistemi, malzemeleri, kaplaması kısmen ya da tamamen değiştirilmiş, özgün çatı okunamıyor"
+cati_tipi                   = u"-"
+cati_kaplama                = u"-"
+cati_yapisal_durum          = u"-"
+cati_degismislik            = u"-"
 
-deger_grubu                 = u"2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
-mudahale_onerisi            = u"4 Kütle ve malzeme özellikleri ile dokuya uyumlu, diğer özellikleri doku ile uyumlu hale getirilerek korunacak yapı"
-tescil_durumu               = u""
-tescil_onerisi              = u"Tescile Önerilen"
-karar_grubu                 = u"2 Cephe ve kütle organizasyonu okunabiliyor, açıklıkların form, boyut ve sayılarında, malzemelerde değişme var."
+deger_grubu                 = u"-"
+mudahale_onerisi            = u"-"
+tescil_durumu               = u"-"
+tescil_onerisi              = u"-"
+karar_grubu                 = u"-"
 #=============================================================================
 #Variables, directory of the excel file and name of it
 workingDrive = "E:\\"
@@ -79,7 +79,7 @@ def export_map(map_document,layerName,yapi_id):
         df.zoomToSelectedFeatures()
         df.scale *= 1.5
         arcpy.RefreshActiveView()
-        arcpy.mapping.ExportToJPEG(mxd,imagePath,df,df_export_width=360,df_export_height=300)
+        arcpy.mapping.ExportToJPEG(mxd,imagePath,df,df_export_width=365,df_export_height=300)
     except BaseException as be:
         print be.message
 
@@ -194,11 +194,11 @@ def create_geleneksel_ws(wbName, ada, parsel):
         worksheet.merge_range('F12:F13',u'DEĞİŞMİŞLİK',format_h2)
         worksheet.merge_range('F15:I15',u'DEĞERLENDİRME/MÜDAHALE',format_h3)
 
-        worksheet.merge_range('F16:F17',u'DEĞER GRUBU',format_h2)
-        worksheet.merge_range('F18:F19',u'MÜDAHALE ÖNERİSİ',format_h2)
-        worksheet.write('F20', u'TESCİL DURUMU',format_h2)
-        worksheet.write('F21', u'TESCİL ÖNERİSİ',format_h2)
-        worksheet.write('F22', u'KARAR GRUBU',format_h2)
+        worksheet.write('F16',u'DEĞER GRUBU',format_h2)
+        worksheet.write('F17',u'MÜDAHALE ÖNERİSİ',format_h2)
+        worksheet.write('F18', u'TESCİL DURUMU',format_h2)
+        worksheet.write('F19', u'TESCİL ÖNERİSİ',format_h2)
+        worksheet.write('F20', u'KARAR GRUBU',format_h2)
 
         worksheet.merge_range('A19:D19',u'AVLU ÖZELLİKLERİ/DEĞERLENDİRME',format_h3)
         worksheet.write('A20', u'ÖZGÜN AVLU ELEMANLARI',format_h2)
@@ -232,11 +232,11 @@ def create_geleneksel_ws(wbName, ada, parsel):
         worksheet.merge_range('G10:I11',cati_yapisal_durum,format_df)
         worksheet.merge_range('G12:I13',cati_degismislik,format_df)
 
-        worksheet.merge_range('G16:I17',deger_grubu,format_df)
-        worksheet.merge_range('G18:I19',mudahale_onerisi,format_df)
-        worksheet.merge_range('G20:I20',tescil_durumu,format_df)
-        worksheet.merge_range('G21:I21',tescil_onerisi,format_df)
-        worksheet.merge_range('G22:I22',karar_grubu,format_df)
+        worksheet.merge_range('G16:I16',deger_grubu,format_df)
+        worksheet.merge_range('G17:I17',mudahale_onerisi,format_df)
+        worksheet.merge_range('G18:I18',tescil_durumu,format_df)
+        worksheet.merge_range('G19:I19',tescil_onerisi,format_df)
+        worksheet.merge_range('G20:I20',karar_grubu,format_df)
 
         worksheet.insert_image('A29', mapExortPath+"\\"+str(yapi_kodu)+".jpg")
     except BaseException as Be:
@@ -251,6 +251,8 @@ cursor = arcpy.SearchCursor(yapi_data_gis,"Y_YAPI_ID not in (0,-4,-9)")
 
 for row in cursor:
     yapi_kodu = int(row.getValue("YAPI_KODU"))
+    yapi_tipi = row.getValue("Y_YAPITIPI")
+    yapi_alttipi = row.getValue("Y_YAPI_ALT")
     ada = row.getValue("M_ADA")
     parsel = row.getValue("M_PARSEL")
     koy_adi = row.getValue("M_KOYNAME")
@@ -261,12 +263,40 @@ for row in cursor:
     yapim_teknigi = row.getValue("Y_YAPIM_TE")
     yapisal_durum = row.getValue("Y_YAPISAL_")
     degismislik = row.getValue("Y_YAPI_DEG")
+    ozgun_mimari_elemanlar = row.getValue("Y_OZGUN_MI")
+    ozgun_avlu_elemanlari = row.getValue("Y_OZGUN_AV")
+    ozgun_servis_birimleri = row.getValue("Y_OZGUN_SE")
+    duvar_yapisal_durum = row.getValue("Y_AVLU__01")
+    avlu_degismislik = row.getValue("Y_AVLU__03")
 
-    export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
-    create_geleneksel_ws(workbook,ada,parsel)
-    
+    # avlu duvar deger/karar grubu
+    if(row.getValue("Y_AVLU__04").split(' ')[0] == '1'):
+        duvar_deger_grubu = u"1-Nitelikli"
+        duvar_karar_grubu = u"1-Korunacak"
+    elif(row.getValue("Y_AVLU__04").split(' ')[0] == '2'):
+        duvar_deger_grubu = u"2-Niteliksiz"
+        duvar_karar_grubu = u"2-Kaldırılacak"
+    elif(row.getValue("Y_AVLU__04").split(' ')[0] == '3'):
+        duvar_deger_grubu = u"3-Az Nitelikli"
+        duvar_karar_grubu = u"3-Onarılaca"
+    else:
+        duvar_deger_grubu = row.getValue("Y_AVLU__04")
 
+    cati_tipi = row.getValue("Y_CATI_TIP")
+    cati_kaplama = row.getValue("Y_CATI_KAP")
+    cati_yapisal_durum = row.getValue("Y_CATI_YAP")
+    cati_degismislik = row.getValue("Y_CATI_DEG")
 
+    deger_grubu = row.getValue("DEGER_GRUBU")
+    mudahale_onerisi = row.getValue("Y_YAPI_YER")
+    tescil_durumu = row.getValue("TESCİL_DURUMU")
+    tescil_onerisi = row.getValue("TESCIL_ONERISI")
+    karar_grubu = row.getValue("KARAR_GRUBU")
 
-
+    if(yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Cemil"):
+        export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
+        create_geleneksel_ws(workbook,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    else:
+        continue
 workbook.close()
