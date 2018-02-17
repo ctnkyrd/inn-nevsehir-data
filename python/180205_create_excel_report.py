@@ -49,9 +49,30 @@ ayvali_fis_folder = reportFolder+"\\AYVALI"
 taskinpasa_fis_folder = reportFolder+"\\TASKINPASA"
 cemil_fis_folder = reportFolder+"\\CEMIL"
 
-workBookLocation = workingDrive
-workBookName = "demo.xlsx"
-workbook = xlsxwriter.Workbook(workBookLocation+workBookName)
+workBookLocation_ayvali = ayvali_fis_folder
+workBookLocation_cemil = cemil_fis_folder
+workBookLocation_taskinpasa = taskinpasa_fis_folder
+
+workBookName_geleneksel_ana = "01_Geleneksel_Ana_Yapi.xlsx"
+workBookName_geleneksel_ek = "02_Geleneksel_Ek_Yapi.xlsx"
+workBookName_yeni_ana = "03_Yeni_Ana_Yapi.xlsx"
+workBookName_yeni_ek = "03_Yeni_Ana_Yapi.xlsx"
+
+workbook_ayvali_geleneksel_ana = xlsxwriter.Workbook(workBookLocation_ayvali+workBookName_geleneksel_ana)
+workbook_cemil_geleneksel_ana = xlsxwriter.Workbook(workBookLocation_cemil+workBookName_geleneksel_ana)
+workbook_taskinpasa_geleneksel_ana = xlsxwriter.Workbook(workBookLocation_taskinpasa+workBookName_geleneksel_ana)
+
+workbook_ayvali_geleneksel_ek = xlsxwriter.Workbook(workBookLocation_ayvali+workBookName_geleneksel_ek)
+workbook_cemil_geleneksel_ek = xlsxwriter.Workbook(workBookLocation_cemil+workBookName_geleneksel_ek)
+workbook_taskinpasa_geleneksel_ek = xlsxwriter.Workbook(workBookLocation_taskinpasa+workBookName_geleneksel_ek)
+
+workbook_ayvali_yeni_ana = xlsxwriter.Workbook(workBookLocation_ayvali+workBookName_yeni_ana)
+workbook_cemil_yeni_ana = xlsxwriter.Workbook(workBookLocation_cemil+workBookName_yeni_ana)
+workbook_taskinpasa_yeni_ana = xlsxwriter.Workbook(workBookLocation_taskinpasa+workBookName_yeni_ana)
+
+workbook_ayvali_yeni_ek = xlsxwriter.Workbook(workBookLocation_ayvali+workBookName_yeni_ek)
+workbook_cemil_yeni_ek = xlsxwriter.Workbook(workBookLocation_cemil+workBookName_yeni_ek)
+workbook_taskinpasa_yeni_ek = xlsxwriter.Workbook(workBookLocation_taskinpasa+workBookName_yeni_ek)
 
 excel_path = workingDrive+"excele"
 arcpy.env.workspace = excel_path
@@ -108,13 +129,13 @@ def create_geleneksel_ws(wbName, ada, parsel):
         worksheet.set_row(3,8)
         worksheet.set_row(5,8)
         worksheet.set_row(12,28)
-        
+        worksheet.set_row(24,26)
         #
         #
         #header1 format_h1#############################################################
         #
         #
-        format_h1 = workbook.add_format()
+        format_h1 = wbName.add_format()
         format_h1.set_bg_color('#808080')
         format_h1.set_font_color('white')
         format_h1.set_bold(True)
@@ -127,7 +148,7 @@ def create_geleneksel_ws(wbName, ada, parsel):
         #header2 format_h2#############################################################
         #
         #
-        format_h2 = workbook.add_format()
+        format_h2 = wbName.add_format()
         format_h2.set_bg_color('#d9d9d9')
         format_h2.set_font_color('black')
         format_h2.set_bold(True)
@@ -140,7 +161,7 @@ def create_geleneksel_ws(wbName, ada, parsel):
         #header3 format_h3#############################################################
         #
         #
-        format_h3 = workbook.add_format()
+        format_h3 = wbName.add_format()
         format_h3.set_bg_color('#bfbfbf')
         format_h3.set_font_color('black')
         format_h3.set_bold(True)
@@ -154,7 +175,7 @@ def create_geleneksel_ws(wbName, ada, parsel):
         #datacell format_dc#############################################################
         #
         #
-        format_dc = workbook.add_format()
+        format_dc = wbName.add_format()
         format_dc.set_font_color('black')
         format_dc.set_align('center')
         format_dc.set_font_name('Arial Narrow')
@@ -162,7 +183,7 @@ def create_geleneksel_ws(wbName, ada, parsel):
         format_dc.set_font_size(8.5)
         #
         
-        format_df = workbook.add_format()
+        format_df = wbName.add_format()
         format_df.set_font_color('black')
         format_df.set_align('left')
         format_df.set_font_name('Arial Narrow')
@@ -269,18 +290,22 @@ for row in cursor:
     duvar_yapisal_durum = row.getValue("Y_AVLU__01")
     avlu_degismislik = row.getValue("Y_AVLU__03")
 
+    avlu_karar_deger_temp = row.getValue("Y_AVLU__04")
     # avlu duvar deger/karar grubu
-    if(row.getValue("Y_AVLU__04").split(' ')[0] == '1'):
-        duvar_deger_grubu = u"1-Nitelikli"
-        duvar_karar_grubu = u"1-Korunacak"
-    elif(row.getValue("Y_AVLU__04").split(' ')[0] == '2'):
-        duvar_deger_grubu = u"2-Niteliksiz"
-        duvar_karar_grubu = u"2-Kaldırılacak"
-    elif(row.getValue("Y_AVLU__04").split(' ')[0] == '3'):
-        duvar_deger_grubu = u"3-Az Nitelikli"
-        duvar_karar_grubu = u"3-Onarılaca"
+    if avlu_karar_deger_temp is not None:
+        if(avlu_karar_deger_temp.split(' ')[0] == '1'):
+            duvar_deger_grubu = u"1-Nitelikli"
+            duvar_karar_grubu = u"1-Korunacak"
+        elif(avlu_karar_deger_temp.split(' ')[0] == '2'):
+            duvar_deger_grubu = u"2-Niteliksiz"
+            duvar_karar_grubu = u"2-Kaldırılacak"
+        elif(avlu_karar_deger_temp.split(' ')[0] == '3'):
+            duvar_deger_grubu = u"3-Az Nitelikli"
+            duvar_karar_grubu = u"3-Onarılaca"
+        else:
+            duvar_deger_grubu = avlu_karar_deger_temp
     else:
-        duvar_deger_grubu = row.getValue("Y_AVLU__04")
+        duvar_deger_grubu = "-"
 
     cati_tipi = row.getValue("Y_CATI_TIP")
     cati_kaplama = row.getValue("Y_CATI_KAP")
@@ -295,8 +320,28 @@ for row in cursor:
 
     if(yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Cemil"):
         export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
-        create_geleneksel_ws(workbook,ada,parsel)
+        create_geleneksel_ws(workbook_cemil_geleneksel_ana,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    elif (yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Ayvalı"):
+        export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
+        create_geleneksel_ws(workbook_ayvali_geleneksel_ana,ada,parsel)
+        print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
+    elif (yapi_tipi == u"Geleneksel" and yapi_alttipi == u"Ana Yapı" and koy_adi == u"Taskinpasa"):
+        export_map(mxd_path,"YAPI_DATA_GIS",yapi_kodu)    
+        create_geleneksel_ws(workbook_taskinpasa_geleneksel_ana,ada,parsel)
         print yapi_kodu,"-",koy_adi,"-",ada,"-",parsel
     else:
         continue
-workbook.close()
+
+workbook_ayvali_geleneksel_ana.close()
+workbook_cemil_geleneksel_ana.close()
+workbook_taskinpasa_geleneksel_ana.close()
+workbook_ayvali_geleneksel_ek.close()
+workbook_cemil_geleneksel_ek.close()
+workbook_taskinpasa_geleneksel_ek.close()
+workbook_ayvali_yeni_ana.close()
+workbook_cemil_yeni_ana.close()
+workbook_taskinpasa_yeni_ana.close()
+workbook_ayvali_yeni_ek.close()
+workbook_cemil_yeni_ek.close()
+workbook_taskinpasa_yeni_ek.close()
